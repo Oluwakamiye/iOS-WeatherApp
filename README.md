@@ -1,2 +1,4 @@
 # iOS-WeatherApp
-A Weather App written in Swift 5 for iOS devices using CocoaPods
+iOS App for getting weather for current location and also custom location.
+Written for iOS 13 devices using Swift 5
+Features CoreLocation, Dark Mode, Networking and JSONDecoder
