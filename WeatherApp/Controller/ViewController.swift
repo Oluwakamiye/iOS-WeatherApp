@@ -8,13 +8,57 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var conditionImage: UIImageView!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    
+    var weatherManager = WeatherManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        searchTextField.delegate = self
     }
 
-
+    @IBAction func searchPressed(_ sender: Any) {
+        getWeatherData(cityName: searchTextField.text!)
+        searchTextField.endEditing(true)
+        
+    }
+    
+    //When you press GO on the keyboard
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        getWeatherData(cityName: searchTextField.text!)
+        //This line triggers the end editing method
+        searchTextField.endEditing(true)
+        print("Go button just pressed")
+        return false
+    }
+    
+    //Takes textField from editing mode to non-editing mode. is triggered when endEditing is true
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField.text != ""{
+            return true
+        } else {
+            textField.placeholder = "Please type something"
+            return false
+        }
+    }
+    
+    //What should happen when text field is done editing. is triggered when endEditing is true
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        //searchTextField.text = ""
+        textField.text = ""
+    }
+    
+    func getWeatherData(cityName : String){
+        let weatherResponse = weatherManager.fetchWeather(cityName: cityName)
+        //conditionImage.image = "#imageLiteral(resourceName: \(WeatherResponse.imageName)"
+        temperatureLabel.text = "\(weatherResponse.temperatureString) ℃"
+        print("Setting this")
+        print("Temp String is \(weatherResponse.temperatureString)")
+        cityLabel.text = weatherResponse.cityName
+    }
 }
-
