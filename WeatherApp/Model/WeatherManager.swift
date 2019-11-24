@@ -8,18 +8,21 @@
 
 import Foundation
 
+protocol WeatherManagerDelegate{
+    func didUpdateWeather (response : WeatherResponse)
+}
+
 struct WeatherManager{
     
-    func fetchWeather(cityName : String) -> WeatherResponse{
+    var delegate : WeatherManagerDelegate?
+    
+    func fetchWeather(cityName : String){
         let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&APPID=35a917747c5372f9eafbfe2aef66de71&units=metric"
         print("URL given is::\(urlString)")
-        let response = performRequest(urlString : urlString)
-        return response
+        performRequest(urlString : urlString)
     }
     
-    func performRequest(urlString : String) -> WeatherResponse{
-        var weatherResponse = WeatherResponse()
-        
+    func performRequest(urlString : String){
         //1. Create a URL object
         if let url = URL(string: urlString){
             
@@ -33,9 +36,11 @@ struct WeatherManager{
                     return
                 } else{
                     if let safeData = data{
-                        print(String(data: safeData, encoding: .utf8))
-                        let weatherData = self.parseJSON(dataString: safeData)
-                        weatherResponse = self.generateResponse(rawWeatherData: weatherData)
+                        //print(String(data: safeData, encoding: .utf8))
+                        if let weatherResult = self.parseJSON(dataString: safeData){
+                            self.delegate?.didUpdateWeather(response: weatherResult)
+                            
+                        }
                     }
                 }
             }
@@ -43,23 +48,23 @@ struct WeatherManager{
             //4. Start the task
             task.resume()
         }
-        
-        return weatherResponse
     }
     
-    func parseJSON(dataString : Data) -> WeatherData{
-        var decodedData = WeatherData()
-        let decoder = JSONDecoder()
+    func parseJSON(dataString : Data) -> WeatherResponse?{
         do{
-            decodedData = try decoder.decode(WeatherData.self, from: dataString)
+            let decoder = JSONDecoder()
+            let decodedData = try decoder.decode(WeatherData.self, from: dataString)
+            
+            let weatherResponse = generateWeatherResponse(rawWeatherData: decodedData)
+            return weatherResponse
         }
         catch{
             print(error)
+            return nil
         }
-        return decodedData
     }
     
-    func generateResponse(rawWeatherData : WeatherData) -> WeatherResponse{
+    func generateWeatherResponse(rawWeatherData : WeatherData) -> WeatherResponse{
         var response : WeatherResponse = WeatherResponse()
         response.cityName = rawWeatherData.name
         response.weatherConditionId = rawWeatherData.weather![0].id
