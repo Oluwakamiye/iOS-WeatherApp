@@ -28,6 +28,10 @@ class ViewController: UIViewController {
         
         weatherManager.delegate = self
         searchTextField.delegate = self
+        
+        conditionImage.image = nil
+        cityLabel.text = ""
+        temperatureLabel.text = ""
     }
     
     @IBAction func searchPressed(_ sender: Any) {
