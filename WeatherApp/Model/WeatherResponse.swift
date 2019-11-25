@@ -12,10 +12,10 @@ struct WeatherResponse{
     var cityName : String = ""
     var weatherType : String = ""
     var weatherConditionId : Int = 0
-    var temperature : String = ""
+    var temperature : Float = 0.0
     
     var temperatureString : String{
-        return String(format: "%.1f",temperature)
+        return String(format: "%0.2f ℃",temperature)
     }
     
     var iconName : String{

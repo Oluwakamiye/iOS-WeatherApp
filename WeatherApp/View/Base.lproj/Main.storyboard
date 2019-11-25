@@ -16,11 +16,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="L1m-sY-vwd">
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="L1m-sY-vwd">
                                 <rect key="frame" x="20" y="115" width="374" height="35"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQE-gi-Mjz">
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="5IA-je-seF"/>
+                                            <constraint firstAttribute="width" constant="35" id="e4A-zE-G1Z"/>
+                                        </constraints>
+                                        <color key="tintColor" name="DefaultTheme"/>
+                                        <state key="normal" image="location.circle.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="locationPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sbV-b7-itw"/>
+                                        </connections>
+                                    </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xhU-hQ-brU">
-                                        <rect key="frame" x="0.0" y="0.0" width="275" height="35"/>
+                                        <rect key="frame" x="45" y="0.0" width="242" height="35"/>
                                         <color key="textColor" name="DefaultTheme"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="go"/>
@@ -100,6 +112,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="location.circle.fill" catalog="system" width="64" height="60"/>
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
         <image name="sun.haze" catalog="system" width="64" height="58"/>
         <namedColor name="DefaultTheme">

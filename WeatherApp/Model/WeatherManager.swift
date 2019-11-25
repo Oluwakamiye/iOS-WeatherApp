@@ -22,6 +22,12 @@ struct WeatherManager{
         performRequest(urlString : urlString)
     }
     
+    func fetchWeather(longitude : Double, latitude : Double){
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?&APPID=35a917747c5372f9eafbfe2aef66de71&lat=\(latitude)&lon=\(longitude)&units=metric"
+        print("URL given is::\(urlString)")
+        performRequest(urlString : urlString)
+    }
+    
     func performRequest(urlString : String){
         //1. Create a URL object
         if let url = URL(string: urlString){
@@ -39,7 +45,6 @@ struct WeatherManager{
                         //print(String(data: safeData, encoding: .utf8))
                         if let weatherResult = self.parseJSON(dataString: safeData){
                             self.delegate?.didUpdateWeather(response: weatherResult)
-                            
                         }
                     }
                 }
@@ -68,7 +73,7 @@ struct WeatherManager{
         var response : WeatherResponse = WeatherResponse()
         response.cityName = rawWeatherData.name
         response.weatherConditionId = rawWeatherData.weather![0].id
-        response.temperature = String(rawWeatherData.main.temp)
+        response.temperature = rawWeatherData.main.temp
         response.weatherType = "\(rawWeatherData.weather![0].main), \(rawWeatherData.weather![0].description)"
         print("response is \(response)")
         return response
