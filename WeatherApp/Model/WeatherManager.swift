@@ -72,9 +72,14 @@ struct WeatherManager{
     func generateWeatherResponse(rawWeatherData : WeatherData) -> WeatherResponse{
         var response : WeatherResponse = WeatherResponse()
         response.cityName = rawWeatherData.name
+        response.country = rawWeatherData.sys.country
         response.weatherConditionId = rawWeatherData.weather![0].id
         response.temperature = rawWeatherData.main.temp
         response.weatherType = "\(rawWeatherData.weather![0].main), \(rawWeatherData.weather![0].description)"
+        response.wind = "\(rawWeatherData.wind.speed), \(rawWeatherData.wind.deg)°"
+        response.minTemperature = rawWeatherData.main.temp_min
+        response.maxTemperature = rawWeatherData.main.temp_max
+        response.humidity = rawWeatherData.main.humidity
         print("response is \(response)")
         return response
     }

@@ -13,11 +13,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var conditionImage: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
+    @IBOutlet weak var windLabel: UILabel!
+    @IBOutlet weak var maxTempLabel: UILabel!
+    @IBOutlet weak var minTempLabel: UILabel!
+    @IBOutlet weak var expandButton: UIButton!
+    @IBOutlet weak var viewFoundation: NSLayoutConstraint!
     
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
     var lat : Double = 0.0
     var lon : Double = 0.0
+    var areLabelsHidden = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,11 +36,33 @@ class ViewController: UIViewController {
         weatherManager.delegate = self
         searchTextField.delegate = self
         
-        conditionImage.image = nil
-        cityLabel.text = ""
-        temperatureLabel.text = ""
+        //conditionImage.image = nil
+//        temperatureLabel.text = ""
+//        cityLabel.text = ""
+//        humidityLabel.text = ""
+//        windLabel.text = ""
+//        maxTempLabel.text = ""
+//        minTempLabel.text = ""
+        hideOrShowLabels()
     }
     
+    func hideOrShowLabels(){
+        if !areLabelsHidden{
+            print("Hiding")
+            humidityLabel.isHidden = true
+            windLabel.isHidden = true
+            maxTempLabel.isHidden = true
+            minTempLabel.isHidden = true
+            //expandButton.image(for: .)
+        } else{
+            print("Expanding")
+            humidityLabel.isHidden = false
+            windLabel.isHidden = false
+            maxTempLabel.isHidden = false
+            minTempLabel.isHidden = false
+        }
+        areLabelsHidden = !areLabelsHidden
+    }
     @IBAction func searchPressed(_ sender: Any) {
         getWeatherData(cityName: searchTextField.text!)
         searchTextField.endEditing(true)
@@ -41,6 +70,10 @@ class ViewController: UIViewController {
     
     func getWeatherData(cityName : String){
         weatherManager.fetchWeather(cityName: cityName)
+    }
+    
+    @IBAction func expandPressed(_ sender: UIButton) {
+        hideOrShowLabels()
     }
 }
 
@@ -91,6 +124,12 @@ extension ViewController : UITextFieldDelegate{
     func textFieldDidEndEditing(_ textField: UITextField) {
         //searchTextField.text = ""
         textField.text = ""
+        viewFoundation.constant = 10
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        viewFoundation.constant = 320
+        !areLabelsHidden ? hideOrShowLabels() : nil
     }
 }
 
@@ -101,7 +140,11 @@ extension ViewController: WeatherManagerDelegate{
         DispatchQueue.main.async {
             self.conditionImage.image = UIImage(systemName: response.iconName)
             self.temperatureLabel.text = "\(response.temperatureString) "
-            self.cityLabel.text = response.cityName
+            self.cityLabel.text = "\(response.cityName), \(response.country)"
+            self.humidityLabel.text = "humidity:\(response.humidity)"
+            self.minTempLabel.text = "min-temp:\(response.minTemperatureString)"
+            self.maxTempLabel.text = "max-temp:\(response.maxTemperatureString)"
+            self.windLabel.text = "wind:\(response.wind)"
         }
     }
 }

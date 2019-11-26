@@ -10,12 +10,25 @@ import Foundation
 
 struct WeatherResponse{
     var cityName : String = ""
+    var country : String = ""
     var weatherType : String = ""
     var weatherConditionId : Int = 0
     var temperature : Float = 0.0
+    var minTemperature : Float = 0.0
+    var maxTemperature : Float = 0.0
+    var humidity : Int = 0
+    var wind : String = ""
     
     var temperatureString : String{
         return String(format: "%0.2f ℃",temperature)
+    }
+    
+    var minTemperatureString : String{
+        return String(format: "%0.2f ℃",minTemperature)
+    }
+    
+    var maxTemperatureString : String{
+        return String(format: "%0.2f ℃",maxTemperature)
     }
     
     var iconName : String{

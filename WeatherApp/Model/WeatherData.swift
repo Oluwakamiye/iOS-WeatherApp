@@ -14,7 +14,9 @@ struct WeatherData : Decodable{
     var base : String = ""
     var main : Main = Main()
     var visibility : Int = 0
+    var wind : Wind = Wind()
     var dt : Int = 0
+    var sys : System = System()
     var timezone : Int = 0
     var id : Int = 0
     var name : String = ""
@@ -39,4 +41,13 @@ struct Main : Decodable{
     var humidity : Int = 0
     var temp_min : Float = 0.0
     var temp_max : Float = 0.0
+}
+
+struct System : Decodable{
+    var country : String = ""
+}
+
+struct Wind : Decodable{
+    var speed : Float = 0
+    var deg : Float = 0
 }

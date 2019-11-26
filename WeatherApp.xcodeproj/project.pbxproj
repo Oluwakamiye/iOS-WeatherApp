@@ -73,10 +73,10 @@
 				C5914B672342D2A700961C79 /* AppDelegate.swift */,
 				C5914B7A2342D89700961C79 /* Controller */,
 				C5914B792342D88500961C79 /* View */,
+				C5035B6D2385807A00410869 /* Model */,
 				C5914B6E2342D2A900961C79 /* Assets.xcassets */,
 				C5914B702342D2A900961C79 /* LaunchScreen.storyboard */,
 				C5914B732342D2A900961C79 /* Info.plist */,
-				C5035B6D2385807A00410869 /* Model */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
