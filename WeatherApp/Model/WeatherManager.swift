@@ -17,13 +17,13 @@ struct WeatherManager{
     var delegate : WeatherManagerDelegate?
     
     func fetchWeather(cityName : String){
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&APPID=35a917747c5372f9eafbfe2aef66de71&units=metric"
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&APPID=&units=metric"
         print("URL given is::\(urlString)")
         performRequest(urlString : urlString)
     }
     
     func fetchWeather(longitude : Double, latitude : Double){
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?&APPID=35a917747c5372f9eafbfe2aef66de71&lat=\(latitude)&lon=\(longitude)&units=metric"
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?&APPID=&lat=\(latitude)&lon=\(longitude)&units=metric"
         print("URL given is::\(urlString)")
         performRequest(urlString : urlString)
     }
